@@ -1,14 +1,17 @@
-TMK Keyboard Firmware Collection
-================================
-This repository includes keyboard and converter firmware projects built with [`tmk_core`](https://github.com/tmk/tmk_core) keyboard library.
+TMK Keyboard Firmware for Apple Newton
+======================================
+This repository includes my Apple Newton converter firmware project built with the [`tmk_core`](https://github.com/tmk/tmk_core) keyboard library.
 
-The latest source code is available here: <http://github.com/tmk/tmk_keyboard>
+The latest TMK source code is available here: <http://github.com/tmk/tmk_keyboard>
 
 
 
 Documentation
 -------------
-Refer to wiki pages for further info.
+See the [`README.md`](./converter/newton_usb/README.md) for wiring and compiling instructions, as well as further information.
+
+
+Refer to wiki pages for further info on TMK.
 
 https://github.com/tmk/tmk_keyboard/wiki
 
