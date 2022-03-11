@@ -1,2 +1,0 @@
-OPT_DEFS += -DINFINITY_LED
-include Makefile
