@@ -1,7 +1,0 @@
-TARGET = usb_usb_unimap
-UNIMAP_ENABLE = yes
-KEYMAP_SECTION_ENABLE = yes
-#TMK_LUFA_DEBUG = yes
-#CONSOLE_ENABLE = no
-NO_DEBUG = yes
-include Makefile

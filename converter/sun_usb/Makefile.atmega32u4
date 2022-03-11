@@ -1,5 +1,0 @@
-TARGET = sun_usb_atmega32u4
-MCU = atmega32u4
-
-include Makefile
-
