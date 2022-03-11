@@ -1,5 +1,6 @@
 /*
 Copyright 2012 Jun Wako <wakojun@gmail.com>
+Modifications made by Themav.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -22,8 +23,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PRODUCT_ID      0x8801
 #define DEVICE_VER      0x0101
 #define MANUFACTURER    t.m.k.
-#define PRODUCT         Newton keyboard converter
-#define DESCRIPTION     converts Newton keyboard protocol into USB
+#define PRODUCT         Newton Keyboard Converter
+#define DESCRIPTION     Converts Newton keyboard protocol into USB
 
 
 /* matrix size */

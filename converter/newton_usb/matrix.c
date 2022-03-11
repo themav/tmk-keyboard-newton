@@ -1,5 +1,6 @@
 /*
 Copyright 2012 Jun Wako <wakojun@gmail.com>
+Modifications made by Themav.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -51,7 +52,7 @@ void matrix_init(void)
 {
     debug_keyboard = true;
 
-    serial_init();
+    serial_init(); //Start USART
 
 	// initialize matrix state: all keys off
     for (uint8_t i=0; i < MATRIX_ROWS; i++) matrix[i] = 0x00;
@@ -63,20 +64,21 @@ void matrix_init(void)
 uint8_t matrix_scan(void)
 {
     uint16_t code;
-    code = serial_recv2();
+    code = serial_recv2(); //Read the scancode from the interface.
     if (code == -1) {
-        return 0;
+        return 0; //Do nothing if no code was received.
     }
 
-    print_hex8(code); print(" ");
+    print_hex8(code); print(" "); //Debug output
 
-    if (code&0x80) {
-        // Make code
+    // Check to see if this is a make or break code. Since make codes are all above 0x80 and-ing them with 0x80 should return true.
+    if (code & 0x80) {
+        // Make scancode
         if (!matrix_is_on(ROW(code), COL(code))) {
             matrix[ROW(code)] |=  (1<<COL(code));
         }
     } else {
-        // break code
+        // Break scancode
         if (matrix_is_on(ROW(code), COL(code))) {
             matrix[ROW(code)] &= ~(1<<COL(code));
         }
@@ -90,6 +92,7 @@ uint8_t matrix_get_row(uint8_t row)
     return matrix[row];
 }
 
+//NOOP since this keyboard does not have LEDs.
 void led_set(uint8_t usb_led)
 {
 }
