@@ -7,10 +7,10 @@ README FIRST
 ------------
 This converter was developed with an ANSI Apple Newton keyboard, model X0044.
 
-Unimap is the only keymap supported. Changes if necessary can be made in the standard Unimap fashion, including the TMK website's keymap editor.
+Unimap is the only keymap supported. Changes if necessary can be made in the standard Unimap fashion, including the TMK website's keymap editor. Please see the TMK documentation for how to modify firmware files via the website's keymap editor. You will need to select the "USB-USB" converter on the website [or click here](http://www.tmk-kbd.com/tmk_keyboard/editor/unimap/?usb_usb), upload the Newton converter firmware file, and then make your changes. The resulting file will be renamed to "unimap.hex".
 
 The default keymap only does what's printed on the keys, with the exception of grave swapped for escape.
-That being said, a layer 1 with grave, F1-F12 and forward delete is provided. Press left and right shift simultaneously, then press the 1 key to switch to this layer. When done with those keys, press left/right shift simultaneously again and press 0 to return to the default layer.
+That being said, a layer 1 with grave, F1-F12 and forward delete is provided. Press left and right shift simultaneously along with the the 1 key (3 keys total) to switch to this layer. When done with those keys, press left/right shift simultaneously again with 0 to return to the default layer.
 
 
 Connector
