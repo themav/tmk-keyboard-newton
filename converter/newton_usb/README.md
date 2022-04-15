@@ -1,6 +1,6 @@
 Apple Newton to USB Keyboard Protocol Converter
 ===============================================
-While the target MCU is the ATMega32U4, other USB capable AVR microcontrollers also work.
+While the target MCU is the ATMega32U4, other USB capable AVR microcontrollers also work. It should be set with Vcc as 5V and a 16MHz clock speed.
 
 
 README FIRST
@@ -15,7 +15,7 @@ That being said, a layer 1 with grave, F1-F12 and forward delete is provided. Pr
 
 Connector
 ---------
-On host/converter:
+On the host/converter:
 
     8Pin mini DIN
        ___ ___
@@ -38,7 +38,7 @@ The MCU data pin here is for the hardware USART, but this can be changed in conf
 
     All others should be left N/C
 
-On keyboard PCB:
+On the keyboard PCB:
 
     |==         ==|
     | 1 2 3 4 5 6 |
@@ -49,7 +49,7 @@ On keyboard PCB:
     ----------------------------------
     3   DATA (Green)    PD2 (Most likely marked "RX1" on your board)
     5   5V (Brown)      VCC
-    6   GND (Black)     GND (Also connected to shield on Pin 1)
+    6   GND (Black)     GND (Also connected to shield on Pin 1 of the connector header)
     
 
 
