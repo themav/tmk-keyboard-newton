@@ -104,6 +104,12 @@ void adb_mouse_task(void) {
 }
 #endif
 
+static bool adb_srq = false;
+bool adb_service_request(void)
+{
+    return adb_srq;
+}
+
 // This sends Talk command to read data from register and returns length of the data.
 uint8_t adb_host_talk_buf(uint8_t addr, uint8_t reg, uint8_t *buf, uint8_t len)
 {
@@ -157,7 +163,8 @@ uint8_t adb_host_talk_buf(uint8_t addr, uint8_t reg, uint8_t *buf, uint8_t len)
     // portion of the stop bit of any command or data transaction. The device must lengthen
     // the stop by a minimum of 140 J.lS beyond its normal duration, as shown in Figure 8-15."
     // http://ww1.microchip.com/downloads/en/AppNotes/00591b.pdf
-    if (!wait_data_hi(500)) {    // Service Request(310us Adjustable Keyboard): just ignored
+    if (!data_in()) { adb_srq = true; } else { adb_srq = false; }
+    if (!wait_data_hi(500)) {    // wait for end of SRQ:(310us Adjustable Keyboard)
         xprintf("R");
         sei();
         return 0;
@@ -191,12 +198,14 @@ uint8_t adb_host_talk_buf(uint8_t addr, uint8_t reg, uint8_t *buf, uint8_t len)
         // |________|       |
         //
         uint8_t lo = (uint8_t) wait_data_hi(130);
-        if (!lo)
-            goto error; // no more bit or after stop bit
+        if (!lo) {
+            goto error; // SRQ?
+        }
 
         uint8_t hi = (uint8_t) wait_data_lo(lo);
-        if (!hi)
-            goto error; // stop bit extedned by Srq?
+        if (!hi) {
+            goto error; // stop bit
+        }
 
         if (n/8 >= len) continue; // can't store in buf
 
@@ -209,6 +218,7 @@ uint8_t adb_host_talk_buf(uint8_t addr, uint8_t reg, uint8_t *buf, uint8_t len)
 
 error:
     sei();
+    _delay_us(200);
     return n/8;
 }
 
@@ -227,7 +237,8 @@ void adb_host_listen_buf(uint8_t addr, uint8_t reg, uint8_t *buf, uint8_t len)
     attention();
     send_byte((addr<<4) | ADB_CMD_LISTEN | reg);
     place_bit0();               // Stopbit(0)
-    // TODO: Service Request
+    if (!data_in()) { adb_srq = true; } else { adb_srq = false; }
+    wait_data_hi(500);          // Service Request
     _delay_us(200);             // Tlt/Stop to Start
     place_bit1();               // Startbit(1)
     for (int8_t i = 0; i < len; i++) {
@@ -236,6 +247,7 @@ void adb_host_listen_buf(uint8_t addr, uint8_t reg, uint8_t *buf, uint8_t len)
     }
     place_bit0();               // Stopbit(0);
     sei();
+    _delay_us(200);
 }
 
 void adb_host_listen(uint8_t addr, uint8_t reg, uint8_t data_h, uint8_t data_l)
@@ -277,7 +289,9 @@ void adb_host_kbd_led(uint8_t addr, uint8_t led)
     // Listen Register2
     //  upper byte: not used
     //  lower byte: bit2=ScrollLock, bit1=CapsLock, bit0=NumLock
-    adb_host_listen(addr, 2, 0, led & 0x07);
+    uint16_t reg2 = adb_host_talk(addr, 2);
+    _delay_us(400);
+    adb_host_listen(addr, 2, reg2 >> 8, (reg2 & 0xF8) | (led & 0x07));
 }
 
 

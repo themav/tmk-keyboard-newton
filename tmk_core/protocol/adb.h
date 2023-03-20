@@ -68,11 +68,6 @@ POSSIBILITY OF SUCH DAMAGE.
 #define ADB_ADDR_13         13
 #define ADB_ADDR_14         14
 #define ADB_ADDR_15         15
-// for temporary purpose, do not use for polling
-#define ADB_ADDR_KBD_POLL    9
-#define ADB_ADDR_MOUSE_POLL 10
-#define ADB_ADDR_KBD_TMP    14
-#define ADB_ADDR_MOUSE_TMP  15
 // Command Type
 #define ADB_CMD_RESET       0
 #define ADB_CMD_FLUSH       1
@@ -95,6 +90,15 @@ POSSIBILITY OF SUCH DAMAGE.
 #define ADB_HANDLER_CLASSIC2_MOUSE      0x02
 #define ADB_HANDLER_EXTENDED_MOUSE      0x04
 #define ADB_HANDLER_TURBO_MOUSE         0x32
+#define ADB_HANDLER_MACALLY2_MOUSE      0x42
+#define ADB_HANDLER_MICROSPEED_MACTRAC  0x2F
+#define ADB_HANDLER_MICROSPEED_UNKNOWN  0x5F
+#define ADB_HANDLER_CONTOUR_MOUSE       0x66
+#define ADB_HANDLER_CHPRODUCTS_PRO      0x42
+#define ADB_HANDLER_MOUSESYSTEMS_A3     0x03
+// pseudo handler
+#define ADB_HANDLER_LOGITECH            0x4C
+#define ADB_HANDLER_LOGITECH_EXT        0x4D
 
 
 // ADB host
@@ -112,6 +116,7 @@ void     adb_host_kbd_led(uint8_t addr, uint8_t led);
 void     adb_mouse_task(void);
 void     adb_mouse_init(void);
 uint8_t  adb_mouse_buttons(void);
+bool     adb_service_request(void);
 
 
 #endif
